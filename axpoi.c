@@ -1,3 +1,15 @@
+/*
+ ▄▄▄      ▒██   ██▒ ██▓███   ▒█████   ██▓
+▒████▄    ▒▒ █ █ ▒░▓██░  ██▒▒██▒  ██▒▓██▒
+▒██  ▀█▄  ░░  █   ░▓██░ ██▓▒▒██░  ██▒▒██▒
+░██▄▄▄▄██  ░ █ █ ▒ ▒██▄█▓▒ ▒▒██   ██░░██░
+ ▓█   ▓██▒▒██▒ ▒██▒▒██▒ ░  ░░ ████▓▒░░██░
+ ▒▒   ▓▒█░▒▒ ░ ░▓ ░▒▓▒░ ░  ░░ ▒░▒░▒░ ░▓
+  ▒   ▒▒ ░░░   ░▒ ░░▒ ░       ░ ▒ ▒░  ▒ ░
+  ░   ▒    ░    ░  ░░       ░ ░ ░ ▒   ▒ ░
+      ░  ░ ░    ░               ░ ░   ░
+
+ */
 #include <stdio.h>
 #include "consts.h"
 
@@ -10,7 +22,6 @@
 
 #include<unistd.h>
 #include <sys/stat.h>
-#include <memory.h>
 
 #endif
 
@@ -55,7 +66,6 @@ int main() {
     printf("Welcome to Axpoi v%s\n", VERSION);
     list* config;
     list_construct(&config);
-    //config.get(&config,"port");
     printf("Reading Configuration...\n");
     config_init(config);
     list_destruct(config);
