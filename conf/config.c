@@ -48,6 +48,7 @@ config_init_error parse(FILE *f, list* attr_dst) {
         attr_value[counter - equal_index] = '\0'; // 显式加上结束符
         handle(attr_name,attr_value,attr_dst);
     }
+    free(buf);
     return PARSE_OK;
 }
 
