@@ -4,6 +4,7 @@
 
 #ifndef AXPOI_LIST_H
 #define AXPOI_LIST_H
+#include<stddef.h>
 typedef struct node{
     void* key;
     void* value;
@@ -11,13 +12,12 @@ typedef struct node{
     struct node* before;
 }node;
 
-typedef struct  list{
+typedef struct {
     node* first;
-    node* last;
-    void*(*get)(struct list* l,void* target);
-    void(*destruct)(struct list* l);
-    void(*delete)(struct list* l,void* target);
-    void(*add)(struct list* l,void* pos,void* key,void* value);
 }list;
-void list_construct(list* l);
+void list_construct(list** l);
+void* list_get(list *l, void *target,size_t mem_cmp_len);
+void list_destruct(list* l);
+void list_delete(list *l,void *target,size_t target_mem_length);
+void list_add(list* l,void* pos,size_t pos_mem_len,void* key,void* value);
 #endif //AXPOI_LIST_H

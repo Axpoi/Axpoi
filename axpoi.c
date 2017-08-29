@@ -10,6 +10,7 @@
 
 #include<unistd.h>
 #include <sys/stat.h>
+#include <memory.h>
 
 #endif
 
@@ -52,11 +53,12 @@ void check_env() {
 
 int main() {
     printf("Welcome to Axpoi v%s\n", VERSION);
-    struct list config;
+    list* config;
     list_construct(&config);
-    config.get(&config,"port");
+    //config.get(&config,"port");
     printf("Reading Configuration...\n");
-    config_init(&config);
+    config_init(config);
+    list_destruct(config);
     check_env();
     return 0;
 }

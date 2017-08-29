@@ -3,6 +3,7 @@
 //
 
 #include <stdlib.h>
+#include <memory.h>
 #include "list.h"
 
 
@@ -23,10 +24,12 @@ void list_destruct(list *l) {
 }
 
 
-void* list_get(list *l, void *target) {
+
+
+void *list_get(list *l, void *target, size_t mem_cmp_len) {
     node* current = l->first;
     while(current->next != NULL){
-        if(current->key == target){
+        if(!memcmp(current->key,target,mem_cmp_len)){
             return current->value;
         }
         current = current->next;
@@ -34,8 +37,10 @@ void* list_get(list *l, void *target) {
     return NULL;
 }
 
-void list_delete(list *l,void *target) {
-    node *delete_node = l->get(l, target);
+
+
+void list_delete(list *l, void *target, size_t target_mem_length) {
+    node *delete_node = list_get(l, target,target_mem_length);
     if(target == NULL) return;
     if(delete_node->before != NULL){
         // 前驱是有的
@@ -45,7 +50,6 @@ void list_delete(list *l,void *target) {
             delete_node->before->next = delete_node->next->next;
 
         } else {
-            l->last = delete_node->before;
             delete_node->before->next = NULL;
         }
 
@@ -61,16 +65,20 @@ void list_delete(list *l,void *target) {
     free(delete_node->key);
     free(delete_node);
 }
-void list_add(list* l,void* pos,void* key,void* value){
+
+
+
+void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
     node* new = malloc(sizeof(node));
     new->key = key;
     new->value = value;
     if(pos == NULL){
-        new->next = NULL;
-        l->last = new;
-        // 添加到最后
+        new->next = l->first;
+        l->first->before = new;
+        l->first = new;
+        // 添加到最前
     } else {
-        node* current = l->get(l,pos);
+        node* current = list_get(l,pos,pos_mem_len);
         if(current == NULL){
             return;
         }
@@ -86,12 +94,10 @@ void list_add(list* l,void* pos,void* key,void* value){
 }
 
 
-void list_construct(list* l) {
-    l = malloc(sizeof(list));
-    l->get = &list_get;
-    l->destruct = &list_destruct;
-    l->delete = &list_delete;
-    l->add = &list_add;
-    l->first = malloc(sizeof(node));
-    l->last = malloc(sizeof(node));
+void list_construct(list** l) {
+    *l = malloc(sizeof(list));
+    node* first = malloc(sizeof(node));
+    first->next = NULL;
+    (*l)->first = first;
+    first->before = NULL;
 }

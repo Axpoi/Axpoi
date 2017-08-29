@@ -15,7 +15,7 @@
 
 
 void handle(char *attr_name, char *attr_value,list *attr_dst) {
-    attr_dst->add(attr_dst,NULL,attr_name,attr_value);
+    list_add(attr_dst,NULL,0,attr_name,attr_value);
 }
 
 /**
@@ -28,8 +28,8 @@ config_init_error parse(FILE *f, list* attr_dst) {
     char *buf;
     buf = malloc(sizeof(char) * LINE_LENGTH);
     while (fgets(buf, LINE_LENGTH, f)) {
-        char attr_name[ATTR_MAX_LENGTH] = ""; // 读出的属性名称
-        char attr_value[ATTR_MAX_LENGTH] = ""; // 读出的属性值
+        char* attr_name = malloc(ATTR_MAX_LENGTH * sizeof(char)); // 读出的属性名称
+        char* attr_value = malloc(ATTR_MAX_LENGTH * sizeof(char)); // 读出的属性值
         int equal_index = 0;
         if (buf[0] == '#' || buf[0] == '\n')
             continue;
@@ -48,7 +48,6 @@ config_init_error parse(FILE *f, list* attr_dst) {
         attr_value[counter - equal_index] = '\0'; // 显式加上结束符
         handle(attr_name,attr_value,attr_dst);
     }
-    free(buf);
     return PARSE_OK;
 }
 
