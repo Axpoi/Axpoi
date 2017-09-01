@@ -26,11 +26,46 @@ const unsigned char magic[16] = {
 };
 
 typedef struct{
+    short length;
+    char* string;
+};
+
+typedef struct{
+    char address[7];
+}address;
+
+typedef struct{
     char first;
     char second;
     char last;
 }uint24le;
+// 一个uuid是16字节的,
+// 我是打算这样储存的,不知道有没毛病..
+// Graph:
+//  0000   0000 - 0000 - 0000 - 0000 - 0000 0000 0000
+// |           |  |                |   |            |
+// |  first[4] |  |   second[6]    |   |   last[6]  |
+// |           |  |                |   |            |
+typedef struct{
+    char first[4];
+    char second[6];
+    char last[6];
+}uuid;
 
+typedef struct{
+    int x;
+    int y;
+    int z;
+}position;
+
+typedef struct{
+    int x;
+    int y;
+    int z;
+}block_position;
+// 不要质疑我编译器扭曲int类型,32位和64位的编译器貌似int都是4字节
+// 不是的话你大可魔改此处代码,
+// 不觉得,char有点反人类?
 
 
 #endif //AXPOI_DATA_TYPES_H
