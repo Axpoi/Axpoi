@@ -45,9 +45,12 @@ config_init_error parse(FILE *f, list* attr_dst) {
             if (counter > ATTR_MAX_LENGTH)return ERR_MAX_LENGTH_TOO_SHORT;
             attr_value[counter - equal_index] = buf[counter];
         }
+        if(attr_value[counter - equal_index - 1] == '\n')
+            counter--;
         attr_value[counter - equal_index] = '\0'; // 显式加上结束符
         handle(attr_name,attr_value,attr_dst);
     }
+    free(buf);
     return PARSE_OK;
 }
 
