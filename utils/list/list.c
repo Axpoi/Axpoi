@@ -7,22 +7,20 @@
 #include "list.h"
 
 
-
 void list_destruct(list *l) {
-    if(l == NULL)
+    if (l == NULL)
         return;
-    if(l->first == NULL){
+    if (l->first == NULL) {
         free(l);
         return;
     }
-    node* first = l->first;
+    node *first = l->first;
     l->first = l->first->next;
     free(first->key);
     free(first->value);
     free(first);
     list_destruct(l);
 }
-
 
 
 /**
@@ -33,31 +31,30 @@ void list_destruct(list *l) {
  * @return
  */
 node *list_get(list *l, void *target, size_t mem_cmp_len) {
-    if(l->first == NULL){
+    if (l->first == NULL) {
         return NULL;
     }
-    node* current = l->first;
-    do{
+    node *current = l->first;
+    do {
         // 此处其实有个"漏洞",本函数并没有注意指针成为野指针的问题,
         // 也就是说,指针因为实际key的长度可能实际没那么长,就可能出现一种memcmp 比较到野指针的问题
         // 我在这里也不做深究,如果真的有重大bug我再改进这一算法.
-        if(!memcmp(current->key,target,mem_cmp_len)){
+        if (!memcmp(current->key, target, mem_cmp_len)) {
             return current;
         }
         current = current->next;
-    }while(current->next != NULL);
+    } while (current->next != NULL);
     return NULL;
 }
 
 
-
 void list_delete(list *l, void *target, size_t target_mem_length) {
-    node *delete_node = list_get(l, target,target_mem_length);
-    if(target == NULL) return;
-    if(delete_node->before != NULL){
+    node *delete_node = list_get(l, target, target_mem_length);
+    if (target == NULL) return;
+    if (delete_node->before != NULL) {
         // 前驱是有的
         // 这个东西是在一个链表的中间位置,或者最后位置
-        if(delete_node->next != NULL){
+        if (delete_node->next != NULL) {
             // 中间位置
             delete_node->before->next = delete_node->next->next;
 
@@ -67,7 +64,7 @@ void list_delete(list *l, void *target, size_t target_mem_length) {
 
     } else {
         // 前驱没有,说明在first.
-        if(delete_node->next != NULL)
+        if (delete_node->next != NULL)
             l->first = l->first->next;
         else
             // 后继也没有
@@ -79,14 +76,13 @@ void list_delete(list *l, void *target, size_t target_mem_length) {
 }
 
 
-
 void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
-    node* new = malloc(sizeof(node));
+    node *new = malloc(sizeof(node));
     new->key = key;
     new->value = value;
-    if(pos == NULL){
+    if (pos == NULL) {
         new->next = l->first;
-        if(l->first == NULL){
+        if (l->first == NULL) {
             l->first = malloc(sizeof(node));
             new->next = NULL;
             new->before = NULL;
@@ -98,9 +94,9 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
 
         // 添加到最前
     } else {
-        node* current = list_get(l,pos,pos_mem_len);
-        if(current == NULL){
-            if(l->first == NULL){
+        node *current = list_get(l, pos, pos_mem_len);
+        if (current == NULL) {
+            if (l->first == NULL) {
                 l->first = malloc(sizeof(node));
                 new->next = NULL;
                 new->before = NULL;
@@ -109,7 +105,7 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
             return;
         }
         new->next = current;
-        if(current->before == NULL)
+        if (current->before == NULL)
             l->first = new;
         else
             new->before = current->before;
@@ -120,7 +116,7 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
 }
 
 
-void list_construct(list** l) {
+void list_construct(list **l) {
     *l = malloc(sizeof(list));
     (*l)->first = NULL;
 }

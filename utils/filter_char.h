@@ -4,6 +4,7 @@
 
 #ifndef AXPOI_FILTER_CHAR_H
 #define AXPOI_FILTER_CHAR_H
+
 void filter_char(char *filter_char, char filter) {
     int rel_index = 0;
     for (int i = 0; filter_char[i] != '\0'; ++i) {
@@ -16,4 +17,5 @@ void filter_char(char *filter_char, char filter) {
     }
     filter_char[rel_index] = '\0';
 }
+
 #endif //AXPOI_FILTER_CHAR_H
