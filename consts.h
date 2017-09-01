@@ -5,6 +5,5 @@
 #ifndef AXPOI_CONSTS_H
 #define AXPOI_CONSTS_H
 #define UNIX
-#define DEBUG
 #define CONFIG_FILE "./axpoi.ini"
 #endif //AXPOI_CONSTS_H

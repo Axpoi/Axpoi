@@ -23,11 +23,13 @@
 #include<unistd.h>
 #include <sys/stat.h>
 #include <memory.h>
+#include <stdlib.h>
 
 #endif
 
 #include "utils/list/list.h"
 #include "conf/config.h"
+#include "network/udp_socket.h"
 
 #define VERSION "0.0"
 
@@ -69,7 +71,8 @@ int main() {
     list_construct(&config);
     printf("Reading Configuration...\n");
     config_init(config);
-    list_delete(config, "port", strlen("port"));
+    int socket_fd = socket_create(config);
+    printf("Socket initialization done.File descriptor:%d\n",socket_fd);
     list_destruct(config);
     check_env();
     return 0;

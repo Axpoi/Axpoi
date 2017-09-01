@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "list.h"
+#include <stdio.h>
 
 
 void list_destruct(list *l) {
@@ -78,12 +79,20 @@ void list_delete(list *l, void *target, size_t target_mem_length) {
 
 void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
     node *new = malloc(sizeof(node));
+    if(!new){
+        printf("No enough memory");
+        return;
+    }
     new->key = key;
     new->value = value;
     if (pos == NULL) {
         new->next = l->first;
         if (l->first == NULL) {
             l->first = malloc(sizeof(node));
+            if(!l->first){
+                printf("No enough memory");
+                return;
+            }
             new->next = NULL;
             new->before = NULL;
             l->first = new;
@@ -98,6 +107,10 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
         if (current == NULL) {
             if (l->first == NULL) {
                 l->first = malloc(sizeof(node));
+                if(!l->first){
+                    printf("No enough memory");
+                    return;
+                }
                 new->next = NULL;
                 new->before = NULL;
                 l->first = new;
@@ -118,5 +131,9 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
 
 void list_construct(list **l) {
     *l = malloc(sizeof(list));
+    if(!(*l)){
+        printf("No enough memory");
+        return;
+    }
     (*l)->first = NULL;
 }
