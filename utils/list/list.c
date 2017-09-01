@@ -32,17 +32,20 @@ void list_destruct(list *l) {
  * @param mem_cmp_len
  * @return
  */
-void *list_get(list *l, void *target, size_t mem_cmp_len) {
+node *list_get(list *l, void *target, size_t mem_cmp_len) {
+    if(l->first == NULL){
+        return NULL;
+    }
     node* current = l->first;
-    while(current->next != NULL){
+    do{
         // 此处其实有个"漏洞",本函数并没有注意指针成为野指针的问题,
         // 也就是说,指针因为实际key的长度可能实际没那么长,就可能出现一种memcmp 比较到野指针的问题
         // 我在这里也不做深究,如果真的有重大bug我再改进这一算法.
         if(!memcmp(current->key,target,mem_cmp_len)){
-            return current->value;
+            return current;
         }
         current = current->next;
-    }
+    }while(current->next != NULL);
     return NULL;
 }
 
@@ -83,12 +86,26 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
     new->value = value;
     if(pos == NULL){
         new->next = l->first;
-        l->first->before = new;
-        l->first = new;
+        if(l->first == NULL){
+            l->first = malloc(sizeof(node));
+            new->next = NULL;
+            new->before = NULL;
+            l->first = new;
+        } else {
+            l->first->before = new;
+            l->first = new;
+        }
+
         // 添加到最前
     } else {
         node* current = list_get(l,pos,pos_mem_len);
         if(current == NULL){
+            if(l->first == NULL){
+                l->first = malloc(sizeof(node));
+                new->next = NULL;
+                new->before = NULL;
+                l->first = new;
+            }
             return;
         }
         new->next = current;
@@ -105,8 +122,5 @@ void list_add(list *l, void *pos, size_t pos_mem_len, void *key, void *value) {
 
 void list_construct(list** l) {
     *l = malloc(sizeof(list));
-    node* first = malloc(sizeof(node));
-    first->next = NULL;
-    (*l)->first = first;
-    first->before = NULL;
+    (*l)->first = NULL;
 }

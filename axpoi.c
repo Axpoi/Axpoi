@@ -22,6 +22,7 @@
 
 #include<unistd.h>
 #include <sys/stat.h>
+#include <memory.h>
 
 #endif
 
@@ -64,10 +65,11 @@ void check_env() {
 
 int main() {
     printf("Welcome to Axpoi v%s\n", VERSION);
-    list* config;
+    list *config;
     list_construct(&config);
     printf("Reading Configuration...\n");
     config_init(config);
+    list_delete(config, "port", strlen("port"));
     list_destruct(config);
     check_env();
     return 0;
