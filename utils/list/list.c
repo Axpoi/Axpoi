@@ -25,10 +25,19 @@ void list_destruct(list *l) {
 
 
 
-
+/**
+ * 比较内存,如果target匹配则给出指针地址
+ * @param l
+ * @param target
+ * @param mem_cmp_len
+ * @return
+ */
 void *list_get(list *l, void *target, size_t mem_cmp_len) {
     node* current = l->first;
     while(current->next != NULL){
+        // 此处其实有个"漏洞",本函数并没有注意指针成为野指针的问题,
+        // 也就是说,指针因为实际key的长度可能实际没那么长,就可能出现一种memcmp 比较到野指针的问题
+        // 我在这里也不做深究,如果真的有重大bug我再改进这一算法.
         if(!memcmp(current->key,target,mem_cmp_len)){
             return current->value;
         }
