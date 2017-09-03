@@ -4,10 +4,21 @@
 	> Mail: 
 	> Created Time: Sun 03 Sep 2017 11:00:58 AM CST
  ************************************************************************/
+// TODO Header file.
+#ifdef UNIX
+#include<dlfcn.h>
+#endif
 
-#include<stdio.h>
+// 插件框架和加载器
+void plugin_load_one(char* plugin_path){
+#ifdef UNIX
+    void* plugin_handle = dlopen(path,RTLD_NOW);
+    if(plugin_handle == NULL){
+        printf("Load plugin error\n");
+        printf("Reason:%s\n",dlerror());
+        return;
+    }
 
-void plugin_load(){
 
-
+#endif
 }
