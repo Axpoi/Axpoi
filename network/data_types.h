@@ -5,20 +5,20 @@
 #ifndef AXPOI_DATA_TYPES_H
 #define AXPOI_DATA_TYPES_H
 
-typedef char byte;
+//typedef char byte;
 
 typedef struct{
-    char data[4];
+    uchar data[4];
 }rak_int;
 
 typedef struct{
-    char data[2];
+    uchar data[2];
 }rak_short;
 
 typedef struct{
-    char data[8];
+    uchar data[8];
 }rak_long;
-const unsigned char magic[16] = {
+const uchar magic[16] = {
         0x00,0xff,0xff,0xfe,
         0x00,0xfe,0xfe,0xfe,
         0xfd,0xfd,0xfd,0xfd,
@@ -26,18 +26,18 @@ const unsigned char magic[16] = {
 };
 
 typedef struct{
-    short length;
+    int16 length;
     char* string;
 };
 
 typedef struct{
-    char address[7];
+    uchar address[7];
 }address;
 
 typedef struct{
-    char first;
-    char second;
-    char last;
+    uchar first;
+    uchar second;
+    uchar last;
 }uint24le;
 // 一个uuid是16字节的,
 // 我是打算这样储存的,不知道有没毛病..
@@ -47,25 +47,25 @@ typedef struct{
 // |  first[4] |  |   second[6]    |   |   last[6]  |
 // |           |  |                |   |            |
 typedef struct{
-    char first[4];
-    char second[6];
-    char last[6];
+    uchar first[4];
+    uchar second[6];
+    uchar last[6];
 }uuid;
 
 typedef struct{
-    int x;
-    int y;
-    int z;
+    int32 x;
+    int32 y;
+    int32 z;
 }position;
 
 typedef struct{
-    int x;
-    int y;
-    int z;
+    int32 x;
+    int32 y;
+    int32 z;
 }block_position;
 // 不要质疑我编译器扭曲int类型,32位和64位的编译器貌似int都是4字节
 // 不是的话你大可魔改此处代码,
 // 不觉得,char有点反人类?
-
+//fixed
 
 #endif //AXPOI_DATA_TYPES_H
