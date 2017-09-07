@@ -1,4 +1,5 @@
 //for mingw/g++
+#include <stdint.h>
 #ifndef net_ints
 #define net_ints
 typedef int32_t int32
