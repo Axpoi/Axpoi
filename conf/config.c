@@ -12,7 +12,7 @@
 
 #define LINE_LENGTH 1024
 #define ATTR_MAX_LENGTH 40
-
+char buf[LINE_LENGTH];
 
 void handle(char *attr_name, char *attr_value, list *attr_dst) {
     list_add(attr_dst, NULL, 0, attr_name, attr_value);
@@ -25,8 +25,6 @@ void handle(char *attr_name, char *attr_value, list *attr_dst) {
  * @return 错误
  */
 config_init_error parse(FILE *f, list *attr_dst) {
-    char *buf;
-    buf = malloc(sizeof(char) * LINE_LENGTH);
     while (fgets(buf, LINE_LENGTH, f)) {
         char *attr_name = malloc(ATTR_MAX_LENGTH * sizeof(char)); // 读出的属性名称
         char *attr_value = malloc(ATTR_MAX_LENGTH * sizeof(char)); // 读出的属性值
@@ -52,7 +50,6 @@ config_init_error parse(FILE *f, list *attr_dst) {
         attr_value[counter - equal_index] = '\0'; // 显式加上结束符
         handle(attr_name, attr_value, attr_dst);
     }
-    free(buf);
     return PARSE_OK;
 }
 

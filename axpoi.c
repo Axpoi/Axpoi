@@ -22,12 +22,9 @@
 
 #include<unistd.h>
 #include <sys/stat.h>
-#include <memory.h>
-#include <stdlib.h>
 
 #endif
-
-#include "utils/list/list.h"
+#include "plugin/plugin_c.h"
 #include "conf/config.h"
 #include "network/udp_socket.h"
 
@@ -73,7 +70,9 @@ int main() {
     config_init(config);
     int socket_fd = socket_create(config);
     printf("Socket initialization done.File descriptor:%d\n",socket_fd);
+    plugin_init(config);
     list_destruct(config);
     check_env();
+
     return 0;
 }
