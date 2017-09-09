@@ -50,12 +50,36 @@ vector_3d_side vector_3d_oppo_side(vector_3d_side side) {
     return side - 1;
 }
 
-double get_distance(vector_three_dimensional *from, vector_three_dimensional *to) {
-    return sqrt(get_distance_squared(from,to));
+double vector_3d_get_distance(vector_three_dimensional *from, vector_three_dimensional *to) {
+    return sqrt(vector_3d_get_distance_squared(from, to));
 }
 
-double get_distance_squared(vector_three_dimensional *from, vector_three_dimensional *to) {
+double vector_3d_get_distance_squared(vector_three_dimensional *from, vector_three_dimensional *to) {
     return (from->x - to->x)*(from->x - to->x)
            +(from->y - to->y)*(from->y - to->y)
            +(from->z - to->z)*(from->z - to->z);
+}
+
+double vector_3d_length_squared(vector_three_dimensional *v) {
+    return v->x * v->x
+           + v->y * v->y
+           + v->z * v->z;
+}
+
+double vector_3d_length(vector_three_dimensional *v) {
+    return sqrt(vector_3d_length_squared(v));
+}
+
+vector_three_dimensional vector_3d_cross(vector_three_dimensional *v, vector_three_dimensional *to) {
+    vector_three_dimensional result;
+    result.x = v->y * to->z - v->z * to->y;
+    result.y = v->z * to->x - v->x * to->z;
+    result.z = v->x * to->y - v->y * to->x;
+    return result;
+}
+
+int vector_3d_equals(vector_three_dimensional *current, vector_three_dimensional *cmp) {
+    return current->x == cmp->x
+           && current->y == cmp->y
+           && current->x == cmp->y;
 }

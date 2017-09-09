@@ -25,7 +25,15 @@ vector_three_dimensional vector_3d_get_side(vector_three_dimensional *v, double 
 
 vector_3d_side vector_3d_oppo_side(vector_3d_side side);
 
-double get_distance(vector_three_dimensional* from,vector_three_dimensional* to);
+double vector_3d_get_distance(vector_three_dimensional *from, vector_three_dimensional *to);
 
-double get_distance_squared(vector_three_dimensional* from,vector_three_dimensional* to);
+double vector_3d_get_distance_squared(vector_three_dimensional *from, vector_three_dimensional *to);
+
+double vector_3d_length(vector_three_dimensional *v);
+
+double vector_3d_length_squared(vector_three_dimensional *v);
+
+vector_three_dimensional vector_3d_cross(vector_three_dimensional *v,vector_three_dimensional *to);
+
+int vector_3d_equals(vector_three_dimensional *current,vector_three_dimensional *cmp);
 #endif //AXPOI_VECTOR_THREE_DEMENSIONAL_H
