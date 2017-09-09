@@ -3,7 +3,7 @@
 //
 
 #include "vector_three_dimensional.h"
-
+#include <math.h>
 vector_three_dimensional vector_3d_construct(double x, double y, double z) {
     vector_three_dimensional v;
     v.x = x;
@@ -48,4 +48,14 @@ vector_3d_side vector_3d_oppo_side(vector_3d_side side) {
         return side + 1;
     }
     return side - 1;
+}
+
+double get_distance(vector_three_dimensional *from, vector_three_dimensional *to) {
+    return sqrt(get_distance_squared(from,to));
+}
+
+double get_distance_squared(vector_three_dimensional *from, vector_three_dimensional *to) {
+    return (from->x - to->x)*(from->x - to->x)
+           +(from->y - to->y)*(from->y - to->y)
+           +(from->z - to->z)*(from->z - to->z);
 }
